@@ -1,6 +1,5 @@
 var express = require('express');
 var sql = require('mysql');
-const { stringify } = require('querystring');
 require('dotenv').config() // load .env file into process
 
 var router = express.Router()
@@ -18,14 +17,11 @@ function createSQLConnection() {
 function getSQLQuery(connection, query, callback) {
     // execute a sql query and send result as response to the caller
     connection.query(query, function (error, results, fields) {
-
         if (error) {
             callback(error)
         }
-
         let parsedQuery = Object.values(JSON.parse(JSON.stringify(results)));
         connection.end()
-
         callback(parsedQuery)
     });
 }
@@ -36,9 +32,7 @@ function insertSQLQuery(connection, query, callback) {
         if (error) {
             callback(error)
         }
-
         callback(results)
-
     })
 }
 
