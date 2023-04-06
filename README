@@ -1,3 +1,14 @@
 # CS4347 Database Systems Hospital DBMS
 
 An express.js app designed to work with a database managing a hospital for a Database Systems Class.
+
+
+API RESPONSE CODES
+
+201 - Successful login
+202 - Successful logout
+203 - Successful user creation
+
+
+403 - Failed to create user, SQL error
+410 - Failed to create user, duplicate username

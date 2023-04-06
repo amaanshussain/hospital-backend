@@ -1,11 +1,14 @@
 var express = require('express');
+var cookieparser = require('cookie-parser')
 var sql = require('mysql')
 require('dotenv').config() // load .env file into process
 
 // routes for endpoints
+const login = require('./routes/login.js')
 const staff = require('./routes/staff.js')
 const general = require('./routes/general.js')
-const patients = require('./routes/patients.js')
+const patients = require('./routes/patients.js');
+const exp = require('constants');
 
 var app = express();
 
@@ -20,7 +23,12 @@ function createSQLConnection() {
     });
 }
 
+// express tools
+app.use(express.json()); // parse json objects from request
+app.use(cookieparser()); // handle cookies
+
 // add routes to express app
+app.use('/api/login', login)
 app.use('/api/general', general)
 app.use('/api/staff', staff)
 app.use('/api/patients', patients)

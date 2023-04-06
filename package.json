@@ -8,6 +8,7 @@
     "run": "node app.js"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express.js": "^1.0.0",
     "mysql": "^2.18.1"

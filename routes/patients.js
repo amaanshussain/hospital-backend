@@ -28,16 +28,23 @@ function getSQLQuery(connection, res, query) {
     });
 }
 
-router.get('/patients', function (req, res) {
+router.get('/', function (req, res) {
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from PATIENT');
 })
 
-router.get('/patients/:id', function (req, res) {
+router.get('/:id', function (req, res) {
     
     var patient_id = req.params['id']
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from PATIENT where PatientID=' + patient_id);
+})
+
+router.get('/:id/history', function (req, res) {
+    
+    var patient_id = req.params['id']
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from HISTORY where PatientID=' + patient_id);
 })
 
 
