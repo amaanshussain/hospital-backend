@@ -2,6 +2,32 @@
 
 An express.js app designed to work with a database managing a hospital for a Database Systems Class.
 
+----------
+
+Endpoints
+/api/login:
+
+/
+POST request to submit login information, will return employee information
+Body:
+    username: str
+    password: str
+
+/logout
+POST request to logout
+
+/create
+POST request to create a new user based on user input
+Body:
+    fName: str
+    mInit: str
+    lName: str
+    deptId: int
+    username: str
+    password: str
+
+
+---------
 
 API RESPONSE CODES
 
