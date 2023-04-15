@@ -58,7 +58,7 @@ router.get('/department/:id', function (req, res) {
     var connection = sqlm.createSQLConnection();
     sqlm.getSQLQuery(
         connection,
-        `select * from ROOM where DeptID=${deptId}`,
+        `select * from vwROOM_DETAILS where DeptID=${deptId}`,
         function (result) {
             res.send(result)
         }

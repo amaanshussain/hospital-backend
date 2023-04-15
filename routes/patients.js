@@ -34,20 +34,55 @@ router.get('/', function (req, res) {
 })
 
 router.get('/:id', function (req, res) {
-    
     var patient_id = req.params['id']
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from PATIENT where PatientID=' + patient_id);
 })
 
 router.get('/:id/history', function (req, res) {
-    
     var patient_id = req.params['id']
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from HISTORY where PatientID=' + patient_id);
 })
 
+router.get('/:id/appointments', function (req, res) {
+    var patient_id = req.params['id'];
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_APPOINTMENTS WHERE PatientID=' + patient_id);
+})
 
+router.get('/:id/prescriptions', function (req, res) {
+    var patient_id = req.params['id'];
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_PRESCRIPTIONS WHERE PatientID=' + patient_id);
+})
 
+router.get('/:id/exams', function (req, res) {
+    var patient_id = req.params['id'];
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_EXAMS WHERE PatientID=' + patient_id);
+})
+
+router.get('/:id/invoices', function (req, res) {
+    var patient_id = req.params['id'];
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_INVOICES WHERE PatientID=' + patient_id);
+})
+
+router.get('/:id/admissions', function (req, res) {
+    var patient_id = req.params['id'];
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_ADMISSIONS WHERE PatientID=' + patient_id);
+})
+
+router.get('/balances', function (req, res) {
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_BALANCES');
+})
+
+router.get('/admissions', function (req, res) {
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwCURRENT_ADMISSIONS');
+})
 
 module.exports = router;
