@@ -50,6 +50,18 @@ router.get('/doctors', function (req, res) {
     getSQLQuery(connection, res, 'select * from EMPLOYEE e, DOCTOR d where e.EmployeeID=d.EmployeeID');
 })
 
+router.get('/doctors/:id', function (req, res) {
+    var doctor_id = req.params['id']
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from EMPLOYEE e JOIN DOCTOR d ON e.EmployeeID = d.EmployeeID WHERE d.EmployeeID=' + doctor_id);
+})
+
+router.get('/doctors/:id/patients', function (req, res) {
+    var doctor_id = req.params['id']
+    var connection = createSQLConnection('select * from ');
+    getSQLQuery(connection, res, 'select p.* from vwPATIENTDOCTOR pd JOIN PATIENT p ON pd.PatientID = p.PatientID WHERE DoctorID=' + doctor_id);
+})
+
 router.get('/nurses', function (req, res) {
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from EMPLOYEE e, NURSE n where e.EmployeeID=n.EmployeeID');

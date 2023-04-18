@@ -75,6 +75,12 @@ router.get('/:id/admissions', function (req, res) {
     getSQLQuery(connection, res, 'select * from vwPATIENT_ADMISSIONS WHERE PatientID=' + patient_id);
 })
 
+router.get('/:id/doctors', function (req, res) {
+    var patient_id = req.params['id'];
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select e.* from vwPATIENTDOCTOR pd JOIN EMPLOYEE e ON pd.DoctorID = e.EmployeeID WHERE PatientID=' + patient_id);
+})
+
 router.get('/balances', function (req, res) {
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from vwPATIENT_BALANCES');
