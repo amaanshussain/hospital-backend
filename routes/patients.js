@@ -86,7 +86,22 @@ router.get('/balances', function (req, res) {
     getSQLQuery(connection, res, 'select * from vwPATIENT_BALANCES');
 })
 
+router.get('/appointments', function (req, res) {
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_APPOINTMENTS')
+})
+
 router.get('/admissions', function (req, res) {
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_ADMISSIONS')
+})
+
+router.get('/invoices', function (req, res) {
+    var connection = createSQLConnection();
+    getSQLQuery(connection, res, 'select * from vwPATIENT_INVOICES')
+})
+
+router.get('/currentadmissions', function (req, res) {
     var connection = createSQLConnection();
     getSQLQuery(connection, res, 'select * from vwCURRENT_ADMISSIONS');
 })
