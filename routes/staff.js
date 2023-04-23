@@ -1,75 +1,67 @@
 var express = require('express');
-var sql = require('mysql')
+var sqlm = require('../SQLManager.js')
 require('dotenv').config() // load .env file into process
 
 var router = express.Router()
 
-function createSQLConnection() {
-    // return a sql connection from values in .env file
-    return sql.createConnection({
-        host: process.env.HOST,
-        port: process.env.PORT,
-        user: process.env.USERNAME,
-        password: process.env.PASSWORD,
-        database: process.env.DATABASE
-    });
-}
-function getSQLQuery(connection, res, query) {
-    // execute a sql query and send result as response to the caller
-    connection.query(query, function (error, results, fields) {
-
-        if (error) {
-            res.send(error)
-        }
-
-        let patients = Object.values(JSON.parse(JSON.stringify(results)));
-        res.send(patients);
-        connection.end()
-    });
-}
-
 router.get('/employees', function (req, res) {
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE');
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE', function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/employees/:id', function (req, res) {
     
     var employee_id = req.params['id']
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE where EmployeeID=' + employee_id);
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE where EmployeeID=' + employee_id, function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/admins', function (req, res) {
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE e, ADMIN a where e.EmployeeID=a.EmployeeID');
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE e, ADMIN a where e.EmployeeID=a.EmployeeID', function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/doctors', function (req, res) {
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE e, DOCTOR d where e.EmployeeID=d.EmployeeID');
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE e, DOCTOR d where e.EmployeeID=d.EmployeeID', function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/doctors/:id', function (req, res) {
     var doctor_id = req.params['id']
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE e JOIN DOCTOR d ON e.EmployeeID = d.EmployeeID WHERE d.EmployeeID=' + doctor_id);
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE e JOIN DOCTOR d ON e.EmployeeID = d.EmployeeID WHERE d.EmployeeID=' + doctor_id, function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/doctors/:id/patients', function (req, res) {
     var doctor_id = req.params['id']
-    var connection = createSQLConnection('select * from ');
-    getSQLQuery(connection, res, 'select p.* from vwPATIENTDOCTOR pd JOIN PATIENT p ON pd.PatientID = p.PatientID WHERE DoctorID=' + doctor_id);
+    var connection = sqlm.createSQLConnection('select * from ');
+    sqlm.getSQLQuery(connection, 'select p.* from vwPATIENTDOCTOR pd JOIN PATIENT p ON pd.PatientID = p.PatientID WHERE DoctorID=' + doctor_id, function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/nurses', function (req, res) {
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE e, NURSE n where e.EmployeeID=n.EmployeeID');
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE e, NURSE n where e.EmployeeID=n.EmployeeID', function (result) {
+        res.send(result);
+    });
 })
 
 router.get('/pharmacists', function (req, res) {
-    var connection = createSQLConnection();
-    getSQLQuery(connection, res, 'select * from EMPLOYEE e, PHARMACIST p where e.EmployeeID=p.EmployeeID');
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from EMPLOYEE e, PHARMACIST p where e.EmployeeID=p.EmployeeID', function (result) {
+        res.send(result);
+    });
 })
 
 

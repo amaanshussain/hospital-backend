@@ -1,40 +1,8 @@
 var express = require('express');
-var sql = require('mysql');
+var sqlm = require('../SQLManager.js')
 require('dotenv').config() // load .env file into process
 
 var router = express.Router()
-
-function createSQLConnection() {
-    // return a sql connection from values in .env file
-    return sql.createConnection({
-        host: process.env.HOST,
-        port: process.env.PORT,
-        user: process.env.USERNAME,
-        password: process.env.PASSWORD,
-        database: process.env.DATABASE
-    });
-}
-function getSQLQuery(connection, query, callback) {
-    // execute a sql query and send result as response to the caller
-    connection.query(query, function (error, results, fields) {
-        if (error) {
-            callback(error)
-        }
-        let parsedQuery = Object.values(JSON.parse(JSON.stringify(results)));
-        connection.end()
-        callback(parsedQuery)
-    });
-}
-
-function insertSQLQuery(connection, query, callback) {
-    // execute a sql query and send result as response to the caller
-    connection.query(query, function (error, results, fields) {
-        if (error) {
-            callback(error)
-        }
-        callback(results)
-    })
-}
 
 // login endpoint
 router.post('/', function (req, res) {
@@ -42,8 +10,8 @@ router.post('/', function (req, res) {
     // username: string
     // password: string
 
-    var connection = createSQLConnection();
-    getSQLQuery(
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(
         connection,
         'select * from EMPLOYEE where LoginUser="' + body['username'] + '" and LoginPass="' + body['password'] + '"',
         function (result) {
@@ -80,8 +48,8 @@ router.post('/create', function (req, res) {
     // username: string
     // password: string
 
-    var connection = createSQLConnection();
-    getSQLQuery(
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(
         connection,
         'select * from EMPLOYEE',
         function (result) {
@@ -96,8 +64,8 @@ router.post('/create', function (req, res) {
             }
 
             // new connection because old connection ended from getting employee count
-            var connection = createSQLConnection();
-            insertSQLQuery(
+            var connection = sqlm.createSQLConnection();
+            sqlm.executeSQLQuery(
                 connection,
                 `INSERT INTO EMPLOYEE (EmployeeID, FName, MInit, LName, DeptID, LoginUser, LoginPass) VALUES (${employeeID}, "${body['fName']}", "${body['mInit']}", "${body['lName']}", ${body['deptId']}, "${body['username']}", "${body['password']}")`,
                 function (result) {
