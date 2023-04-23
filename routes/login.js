@@ -15,9 +15,11 @@ router.post('/', function (req, res) {
         connection,
         'select * from EMPLOYEE where LoginUser="' + body['username'] + '" and LoginPass="' + body['password'] + '"',
         function (result) {
+
             if (result.length == 0) {
-                res.send({ 'code': 401, 'error': 'Invalid Login, please try again.' })
-                return
+                console.log("signin error");
+                res.status(404).send({ 'code': 401, 'error': 'Invalid Login, please try again.' });
+                return;
             }
             res.cookie('user', result[0]['EmployeeID'])
 
@@ -58,7 +60,7 @@ router.post('/create', function (req, res) {
             for (let i = 0; i < result.length; i++) {
                 const employee = result[i];
                 if (body['username'] == employee.LoginUser) {
-                    res.send({ 'code': 410, 'message': 'Creating user failed. Username already exists.' });
+                    res.status(410).send({ 'code': 410, 'message': 'Creating user failed. Username already exists.' });
                     return;
                 }
             }
