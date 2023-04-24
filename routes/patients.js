@@ -11,6 +11,43 @@ router.get('/', function (req, res) {
     });
 })
 
+router.post('/create', function (req, res) {
+    const body = req.body;
+    console.log(body)
+    console.log(typeof(body.birthDate))
+    if (!body.mInit) {
+        body.mInit = ''
+    }
+    body.birthDate = body.birthDate.split("T")[0]
+
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(
+        connection,
+        'select * from PATIENT',
+        function (result) {
+            var patientID = result.length
+            console.log(patientID)
+
+            // new connection because old connection ended from getting employee count
+            var connection = sqlm.createSQLConnection();
+            sqlm.executeSQLQuery(
+                connection,
+                `INSERT INTO PATIENT (PatientID, FName, MInit, LName, BirthDate, Sex, ContactNo) VALUES (${patientID}, "${body['fName']}", "${body['mInit']}", "${body['lName']}", DATE '${body['birthDate']}', "${body['sex']}", "${body['contactNo']}")`,
+                function (result) {
+                    if (result.hasOwnProperty('code')) {
+                        res.send({ 'code': 403, 'message': 'Creating user failed. Please message administrator.' });
+                        return;
+                    }
+                    body.PatientID = patientID;
+        
+                    res.send(body);
+                }
+            );
+        }
+    )
+})
+
+
 router.get('/:id', function (req, res) {
     var patient_id = req.params['id']
     var connection = sqlm.createSQLConnection();
