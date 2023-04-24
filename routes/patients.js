@@ -57,6 +57,15 @@ router.post('/update', function (req, res) {
     })
 })
 
+router.post('/delete', function (req, res) {
+    const body = req.body;
+    
+    var connection = sqlm.createSQLConnection();
+    sqlm.executeSQLQuery(connection, 'DELETE FROM PATIENT WHERE PatientID=' + body.PatientID, function (result) {
+        res.send(result);
+    })
+})
+
 
 router.get('/:id', function (req, res) {
     var patient_id = req.params['id']
