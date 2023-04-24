@@ -6,9 +6,7 @@ var router = express.Router()
 
 // login endpoint
 router.post('/', function (req, res) {
-    body = req.body
-    // username: string
-    // password: string
+    const body = req.body
 
     var connection = sqlm.createSQLConnection();
     sqlm.getSQLQuery(
@@ -25,6 +23,8 @@ router.post('/', function (req, res) {
 
             delete result[0].LoginUser
             delete result[0].LoginPass
+
+            console.log(result[0])
 
             res.send({
                 'code': 201,

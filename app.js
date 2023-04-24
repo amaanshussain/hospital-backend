@@ -8,7 +8,8 @@ const login = require('./routes/login.js')
 const staff = require('./routes/staff.js')
 const departments = require('./routes/departments.js')
 const patients = require('./routes/patients.js');
-const exp = require('constants');
+const history = require('./routes/history.js')
+
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use('/api/login', login)
 app.use('/api/departments', departments)
 app.use('/api/staff', staff)
 app.use('/api/patients', patients)
+app.use('/api/history', history)
 
 
 app.get('/', function (req, res) {
