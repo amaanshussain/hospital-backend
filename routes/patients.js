@@ -47,6 +47,16 @@ router.post('/create', function (req, res) {
     )
 })
 
+router.post('/update', function (req, res) {
+    const body = req.body;
+    body.birthDate = body.birthDate.split("T")[0];
+
+    var connection = sqlm.createSQLConnection();
+    sqlm.executeSQLQuery(connection, `UPDATE PATIENT SET FName='${body.fName}', MInit='${body.mInit}', LName='${body.lName}', BirthDate= CAST('${body.birthDate}' AS DATETIME), Sex='${body.sex}', ContactNo="${body.contactNo}" WHERE PatientID=${body.patientID}`, function (result) {
+        res.send(body)
+    })
+})
+
 
 router.get('/:id', function (req, res) {
     var patient_id = req.params['id']

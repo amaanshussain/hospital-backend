@@ -27,6 +27,7 @@ function executeSQLQuery(connection, query, callback) {
     connection.query(query, function (error, results, fields) {
         if (error) {
             callback(error)
+            return
         }
         callback(results)
     })
