@@ -7,6 +7,9 @@ var router = express.Router()
 // login endpoint
 router.post('/', function (req, res) {
     const body = req.body
+    
+    body.username = sqlm.escapeInput(body.username);
+    body.password = sqlm.escapeInput(body.password);
 
     var connection = sqlm.createSQLConnection();
     sqlm.getSQLQuery(
