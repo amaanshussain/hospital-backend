@@ -142,30 +142,9 @@ router.get('/balances', function (req, res) {
     });
 })
 
-router.get('/appointments', function (req, res) {
-    var connection = sqlm.createSQLConnection();
-    sqlm.getSQLQuery(connection, 'select * from vwPATIENT_APPOINTMENTS', function (result) {
-        res.send(result)
-    });
-})
-
-router.get('/admissions', function (req, res) {
-    var connection = sqlm.createSQLConnection();
-    sqlm.getSQLQuery(connection, 'select * from vwPATIENT_ADMISSIONS', function (result) {
-        res.send(result)
-    });
-})
-
 router.get('/invoices', function (req, res) {
     var connection = sqlm.createSQLConnection();
     sqlm.getSQLQuery(connection, 'select * from vwPATIENT_INVOICES', function (result) {
-        res.send(result)
-    });
-})
-
-router.get('/currentadmissions', function (req, res) {
-    var connection = sqlm.createSQLConnection();
-    sqlm.getSQLQuery(connection, 'select * from vwCURRENT_ADMISSIONS', function (result) {
         res.send(result)
     });
 })
