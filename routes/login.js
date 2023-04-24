@@ -7,14 +7,12 @@ var router = express.Router()
 // login endpoint
 router.post('/', function (req, res) {
     const body = req.body
-    
-    body.username = sqlm.escapeInput(body.username);
-    body.password = sqlm.escapeInput(body.password);
 
     var connection = sqlm.createSQLConnection();
     sqlm.getSQLQuery(
         connection,
-        'select * from EMPLOYEE where LoginUser="' + body['username'] + '" and LoginPass="' + body['password'] + '"',
+        // 'select * from EMPLOYEE where LoginUser="' + body['username'] + '" and LoginPass="' + body['password'] + '"',
+        sqlm.prepare_bind("select * from EMPLOYEE where LoginUser=? and LoginPass=?", [body.username, body.password]),
         function (result) {
 
             if (result.length == 0) {
@@ -26,8 +24,6 @@ router.post('/', function (req, res) {
 
             delete result[0].LoginUser
             delete result[0].LoginPass
-
-            console.log(result[0])
 
             res.send({
                 'code': 201,

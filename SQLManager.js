@@ -33,11 +33,8 @@ function executeSQLQuery(connection, query, callback) {
     })
 }
 
-function escapeInput(input) {
-    console.log(input)
-    var escapedInput = sql.escape(input);
-    escapedInput = escapedInput.split("\'")[1]
-    return escapedInput;
+function prepare_bind(sql_string, values) {
+    return sql.format(sql_string, values)
 }
 
-module.exports = { createSQLConnection, getSQLQuery, executeSQLQuery, escapeInput };
+module.exports = { createSQLConnection, getSQLQuery, executeSQLQuery, prepare_bind };
