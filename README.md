@@ -3,7 +3,7 @@
 
 An express.js app designed to work with a database managing a hospital for a Database Systems Class.
 
-Frontend: [hospital-frontend-core](https://github.com/#:~:text=ihernandez4390/hospital%2Dfrontend%2Dcore)
+Frontend: [hospital-frontend-core](https://github.com/ihernandez4390/hospital%2Dfrontend%2Dcore)
 
 
 
