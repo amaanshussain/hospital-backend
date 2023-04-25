@@ -90,7 +90,7 @@ router.get('/:id/history', function (req, res) {
 router.get('/:id/appointments', function (req, res) {
     var patient_id = req.params['id'];
     var connection = sqlm.createSQLConnection();
-    sqlm.getSQLQuery(connection, 'select * from vwPATIENT_APPOINTMENTS WHERE PatientID=' + patient_id, function (result) {
+    sqlm.getSQLQuery(connection, 'select a.*, h.PatientID, h.CreationDate from APPOINTMENT a JOIN HISTORY h ON a.HistoryID = h.HistoryID WHERE h.PatientID=' + patient_id, function (result) {
         res.send(result)
     });
 })
@@ -122,7 +122,7 @@ router.get('/:id/invoices', function (req, res) {
 router.get('/:id/admissions', function (req, res) {
     var patient_id = req.params['id'];
     var connection = sqlm.createSQLConnection();
-    sqlm.getSQLQuery(connection, 'select * from vwPATIENT_ADMISSIONS WHERE PatientID=' + patient_id, function (result) {
+    sqlm.getSQLQuery(connection, 'select a.*, h.PatientID, h.CreationDate from ADMISSION a JOIN HISTORY h ON a.HistoryID = h.HistoryID WHERE h.PatientID=' + patient_id, function (result) {
         res.send(result)
     });
 })

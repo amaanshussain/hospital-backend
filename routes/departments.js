@@ -51,6 +51,14 @@ router.post('/createdepartment', function (req, res) {
     )
 })
 
+// get all rooms
+router.get('/rooms', function (req, res) {
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select * from ROOM', function (result) {
+        res.send(result)
+    });
+})
+
 // get rooms for given department
 router.get('/department/:id', function (req, res) {
     var deptId = req.params.id
@@ -109,6 +117,14 @@ router.post('/createroom', function (req, res) {
 router.get('/beds', function (req, res) {
     var connection = sqlm.createSQLConnection();
     sqlm.getSQLQuery(connection, 'select * from BED', function (result) {
+        res.send(result)
+    });
+})
+
+// get available beds
+router.get('/availablebeds', function (req, res) {
+    var connection = sqlm.createSQLConnection();
+    sqlm.getSQLQuery(connection, 'select b.* from BED b LEFT JOIN ADMISSION a ON b.BedNo = a.AssignedBed WHERE a.AssignedBed IS NULL', function (result) {
         res.send(result)
     });
 })
